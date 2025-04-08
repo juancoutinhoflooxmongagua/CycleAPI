@@ -1,9 +1,12 @@
 {
   "name": "cycleapi",
   "version": "1.0.0",
-  "main": "loeader.js",
+  "main": "src/loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "production": "pm2 start src/loader.js --name cycleapi"
+
   },
   "keywords": [],
   "author": "",
@@ -22,3 +25,4 @@
   "devDependencies": {
     "nodemon": "^1.11.0"
   }
+}
