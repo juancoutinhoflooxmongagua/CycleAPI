@@ -7,8 +7,11 @@ const server = express()
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
-server.listen(port, function() {
-    console.log(`Back rodando na porta ${port} .`)
+const errorHandler = require('../common/errorHandler')
+server.use(errorHandler) // aqui estava errado
+
+server.listen(port, function () {
+  console.log(`Back rodando na porta ${port} .`)
 })
 
 module.exports = server
