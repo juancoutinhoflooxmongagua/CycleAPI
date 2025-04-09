@@ -3,15 +3,15 @@ const port = 3003
 const bodyParser = require('body-parser')
 const express = require('express')
 const server = express()
-
+const allowCors = require('./cors')
+const queryParser = require('express-query-int')
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
+server.use(allowCors)
+server.use(queryParser())
 
-const errorHandler = require('../common/errorHandler')
-server.use(errorHandler) // aqui estava errado
-
-server.listen(port, function () {
-  console.log(`Back rodando na porta ${port} .`)
+server.listen(port, function() {
+    console.log(`BACK rodando ${port}.`)
 })
 
 module.exports = server
