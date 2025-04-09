@@ -30,4 +30,36 @@ router.get('/billingCycles/count', async (req, res) => {
   }
 })
 
+router.get('/billingCycles/summary', async (req, res) => {
+    try {
+      const result = await BillingCycle.aggregate([
+        { 
+          $project: {
+            credit: { $sum: "$credits.value" },
+            debt: { $sum: "$debts.value" }
+          }
+        },
+        { 
+          $group: {
+            _id: null,
+            credit: { $sum: "$credit" },
+            debt: { $sum: "$debt" }
+          }
+        },
+        { 
+          $project: {
+            _id: 0,
+            credit: 1,
+            debt: 1
+          }
+        }
+      ])
+  
+      res.json(result[0] || { credit: 0, debt: 0 })
+    } catch (error) {
+      res.status(500).json({ errors: [error] })
+    }
+  })
+  
+
 module.exports = router
