@@ -1,16 +1,17 @@
+// billingCycleService.js
+const express = require('express')
 const BillingCycle = require('./billingCycle')
+const router = express.Router()
 
-BillingCycle.methods(['get', 'post', 'put', 'delete'])
-BillingCycle.updateOptions({ new: true, runValidators: true })
-
-BillingCycle.route('get', (req, res, next) => {
-  BillingCycle.find({}, (err, docs) => {
-    if (!err) {
-      res.json(docs)
-    } else {
-      res.status(500).json({ errors: [err] })
-    }
-  })
+router.get('/billingCycles', async (req, res) => {
+  const data = await BillingCycle.find()
+  res.json(data)
 })
 
-module.exports = BillingCycle
+router.post('/billingCycles', async (req, res) => {
+  const billing = new BillingCycle(req.body)
+  const saved = await billing.save()
+  res.json(saved)
+})
+
+module.exports = router
